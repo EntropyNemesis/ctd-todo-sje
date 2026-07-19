@@ -1,4 +1,4 @@
-function ToDoList() {
+function TodoList() {
     
     const todoList = [
         {id: 1, title: "prep wooden boat trim pieces"},
@@ -11,4 +11,4 @@ function ToDoList() {
     );
 }
 
-export default ToDoList;
+export default TodoList;
