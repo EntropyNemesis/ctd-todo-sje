@@ -12,12 +12,17 @@ import {useState} from 'react';
 function App() {
   
   const [ todoList, setTodoList ] = useState([]);
+
+  function addTodo(todoTitle) {
+    const newTodo = {id: Date.now(), title: todoTitle};
+    setTodoList(previous => [newTodo, ...previous])
+  }
   
   return (
 
     <div>
       <h1>My To-Do List</h1>
-      <TodoForm />
+      <TodoForm onAddTodo={addTodo} />
       <TodoList todoList={todoList} />
       
     </div>
