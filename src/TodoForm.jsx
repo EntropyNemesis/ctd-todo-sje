@@ -11,7 +11,7 @@ function TodoForm({onAddTodo}) {
        //.trim prevents whitespace-only todo entries
        // const todoTitle = event.target.todoTitle.value.trim();
     
-        if (workingTodoTitle.trim() !== "") {
+        if (workingTodoTitle && workingTodoTitle !== "") {
             onAddTodo(workingTodoTitle);
             setWorkingTodoTitle("");
          // event.target.reset();
@@ -19,6 +19,8 @@ function TodoForm({onAddTodo}) {
         }
 
     };
+
+    //console.log(event.target.value);
 
     return (
         <form onSubmit={handleAddTodo}>
@@ -33,8 +35,9 @@ function TodoForm({onAddTodo}) {
                 value={workingTodoTitle}
                 onChange= {(event) => setWorkingTodoTitle(event.target.value)}
             />
-            <button type="submit">Add Todo</button>
+            <button type="submit" disabled={!workingTodoTitle.trim()}>Add Todo</button>
         </form>
+        
     );
 }
 
