@@ -3,12 +3,22 @@ import { useState } from 'react';
 
 function TodoListItem({todo, onCompleteTodo}) {
     const [isEditing, setIsEditing] = useState(false);
+    const [workingTitle, setWorkingTitle] = useState(todo.title);
+
+    function handleCancel() {
+        setWorkingTitle(todo.title);
+        setIsEditing(false);
+    }
 
     return(
         
         <li>
             <form>
-                {isEditing ? (<TextInputWithLabel value={todo.title}/>) : (
+                {isEditing ? (
+                    <>
+                        <TextInputWithLabel value={todo.title}/>
+                        <button type="button" onClick={handleCancel}>Cancel</button>
+                    </>) : (
                     <>
                         <label>
                             <input 
@@ -19,6 +29,7 @@ function TodoListItem({todo, onCompleteTodo}) {
                             />
                         </label>
                         <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+                        
                     </>
                 )}
             </form>
