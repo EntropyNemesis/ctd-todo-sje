@@ -21,17 +21,23 @@ function App() {
 
   function completeTodo(id) {
     setTodoList(previous => 
-      previous.map(todo => todo.id === id ? {...todo, isCompleted: true} : todo
-      )
+      previous.map(todo => todo.id === id ? {...todo, isCompleted: true} : todo)
     );
   }   
+
+  function updateTodo(editedTodo) {
+    const updatedTodos = todoList.map(todo => 
+      todo.id === editedTodo.id ? {...editedTodo} : todo);
+    setTodoList(updatedTodos);
+  }
+
 
   return (
 
     <div>
       <h1>My To-Do List</h1>
       <TodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onCompleteTodo={completeTodo} />
+      <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
       
     </div>
   )   

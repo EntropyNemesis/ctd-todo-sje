@@ -13,7 +13,7 @@ function TodoForm({onAddTodo}) {
        //.trim prevents whitespace-only todo entries
        // const todoTitle = event.target.todoTitle.value.trim();
     
-        if (workingTodoTitle && workingTodoTitle !== "") {
+        if (isValidTodoTitle(workingTodoTitle)) {
             onAddTodo(workingTodoTitle);
             setWorkingTodoTitle("");
          // event.target.reset();
