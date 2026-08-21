@@ -43,9 +43,34 @@ function TodosPage({token}) {
     })();
   }, [token]);
 
-  function addTodo(todoTitle) {
+  async function addTodo(todoTitle) {
     const newTodo = {id: Date.now(), title: todoTitle, isCompleted: false};
     setTodoList(previous => [newTodo, ...previous])
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({title: newTodo.title, isCompleted: newTodo.isCompleted}),
+      headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': token},
+      credentials: 'include'
+    };
+    try{
+      const resp = await fetch('/api/tasks', options)     //exclude curly brackets around options, because brackets would create a new object with one property named options, instead of just referencing the existing object called options like we've done here.
+      if (!resp.ok) {
+        setTodoList(previous => previous.filter(todo => todo.id !== newTodo.id));
+        setError('There was an unexpected error adding that Todo item. Please try again.');
+      } 
+      else {
+        const data = await resp.json()
+      setTodoList(previous => previous.map(todo => todo.id === newTodo.id ? data : todo));
+      }
+    }
+    
+    catch(error){
+      setError(`Error: ${error.name} | ${error.message}`);
+    }
+
+    finally{
+
+    }
   }
 
 
