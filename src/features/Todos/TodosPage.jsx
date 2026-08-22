@@ -60,7 +60,7 @@ function TodosPage({token}) {
       } 
       else {
         const data = await resp.json()
-      setTodoList(previous => previous.map(todo => todo.id === newTodo.id ? data : todo));
+        setTodoList(previous => previous.map(todo => todo.id === newTodo.id ? data : todo));
       }
     }
     
@@ -74,23 +74,98 @@ function TodosPage({token}) {
   }
 
 
-  function completeTodo(id) {
+  async function completeTodo(id) {
+    const originalTodo = todoList.find((todo) => todo.id === id);
+    /*let originalTodo;
+
+  for (const todo of todoList) {
+    if (todo.id === id) {
+      originalTodo = todo;
+      break;
+    }
+  } */ 
     setTodoList(previous => 
       previous.map(todo => todo.id === id ? {...todo, isCompleted: true} : todo)
     );
-  }   
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify({isCompleted: true}),
+      headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': token},
+      credentials: 'include'
+    };
+    try{
+      const resp = await fetch(`/api/tasks/${id}`, options)   
+      if (!resp.ok) {
+        setTodoList(previous => previous.map(todo => todo.id === id ? originalTodo : todo));
+        setError('There was an unexpected error. Please try again.');
+      } 
+    else {
+      const data = await resp.json()
+      setTodoList(previous => previous.map(todo => todo.id === id ? data : todo));
+    }
+  }
+    
+    catch(error){
+      setError(`Error: ${error.name} | ${error.message}`);
+    }
 
-  function updateTodo(editedTodo) {
-    const updatedTodos = todoList.map(todo => 
+    finally{
+
+    }
+  }
+    
+  
+
+  async function updateTodo(editedTodo) {
+    const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
+    const updatedTodos = todoList.map(todo =>   //Claude suggested to make consistent pattern with other functions:  setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? {...editedTodo} : todo));
       todo.id === editedTodo.id ? {...editedTodo} : todo);
     setTodoList(updatedTodos);
+
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify({title: editedTodo.title, isCompleted: editedTodo.isCompleted}),
+      headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': token},
+      credentials: 'include'
+    };
+
+    try{
+      const resp = await fetch(`/api/tasks/${editedTodo.id}`, options)   
+      if (!resp.ok) {
+        setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? originalTodo : todo));
+        setError('There was an unexpected error. Please try again.');
+      } 
+    else {
+      const data = await resp.json()
+      setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? data : todo));
+      }
+    }
+    
+    catch(error){
+      setError(`Error: ${error.name} | ${error.message}`);
+    }
+
+    finally{
+
+    }
   }
 
   return(
-    <div>
-        <TodoForm onAddTodo={addTodo} />
-        <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
-    </div>
+    <>
+      {error && (
+        <div>
+          <p>{error}</p>
+          <button onClick={() => setError('')}>Clear Error</button>
+        </div>
+      )}
+    
+      {isTodoListLoading && <p>Loading...</p>}
+    
+      <div>
+          <TodoForm onAddTodo={addTodo} />
+          <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
+      </div>
+    </>
   )
 }
 
