@@ -23,7 +23,7 @@ function TodosPage({token}) {
         });
 
         if (response.status === 401) {
-            throw new Error(`Unauthorized request.`);
+            throw new Error('Unauthorized');
             }
         
         if (!response.ok) {
@@ -68,6 +68,7 @@ function TodosPage({token}) {
     
     catch(error){
       setError(`Error: ${error.name} | ${error.message}`);
+      setTodoList(previous => previous.filter(todo => todo.id !== newTodo.id));
     }
 
     finally{
@@ -110,7 +111,7 @@ function TodosPage({token}) {
     
     catch(error){
       setError(`Error: ${error.name} | ${error.message}`);
-      setTodoList(previous => previous.map(todo => todo.id === completeTodo.id ? originalTodo : todo));
+      setTodoList(previous => previous.map(todo => todo.id === id ? originalTodo : todo));
     }
 
     finally{
