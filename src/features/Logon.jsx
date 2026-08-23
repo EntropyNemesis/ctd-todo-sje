@@ -21,6 +21,7 @@ function Logon({onSetEmail, onSetToken}) {
         if (response.status === 200 && data.name && data.csrfToken) {
             onSetEmail(data.name);
             onSetToken(data.csrfToken);
+            setAuthError('');
         } else {
             setAuthError(`Authentication failed: ${data?.message}`);
             }

@@ -110,6 +110,7 @@ function TodosPage({token}) {
     
     catch(error){
       setError(`Error: ${error.name} | ${error.message}`);
+      setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? originalTodo : todo));
     }
 
     finally{
@@ -124,7 +125,7 @@ function TodosPage({token}) {
     setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? {...editedTodo} : todo));
     /*const updatedTodos = todoList.map(todo =>   //Claude suggested to make consistent pattern with other functions and prevent stale state:  setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? {...editedTodo} : todo));
       todo.id === editedTodo.id ? {...editedTodo} : todo); */
-    setTodoList(updatedTodos);
+
 
     const options = {
       method: 'PATCH',
@@ -148,6 +149,7 @@ function TodosPage({token}) {
     
     catch(error){
       setError(`Error: ${error.name} | ${error.message}`);
+      setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? originalTodo : todo));
     }
 
     finally{
