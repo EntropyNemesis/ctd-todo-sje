@@ -103,6 +103,7 @@ function TodosPage({token}) {
       } 
     else {
       const data = await resp.json()
+      setError('');
       setTodoList(previous => previous.map(todo => todo.id === id ? data : todo));
     }
   }
@@ -120,8 +121,9 @@ function TodosPage({token}) {
 
   async function updateTodo(editedTodo) {
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
-    const updatedTodos = todoList.map(todo =>   //Claude suggested to make consistent pattern with other functions:  setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? {...editedTodo} : todo));
-      todo.id === editedTodo.id ? {...editedTodo} : todo);
+    setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? {...editedTodo} : todo));
+    /*const updatedTodos = todoList.map(todo =>   //Claude suggested to make consistent pattern with other functions and prevent stale state:  setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? {...editedTodo} : todo));
+      todo.id === editedTodo.id ? {...editedTodo} : todo); */
     setTodoList(updatedTodos);
 
     const options = {
@@ -139,6 +141,7 @@ function TodosPage({token}) {
       } 
     else {
       const data = await resp.json()
+      setError('');
       setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? data : todo));
       }
     }
