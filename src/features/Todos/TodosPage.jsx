@@ -23,7 +23,7 @@ function TodosPage({token}) {
         });
 
         if (response.status === 401) {
-            throw new Error('Not authorized. Please log in.');
+            throw new Error(`Unauthorized request.`);
             }
         
         if (!response.ok) {
@@ -32,6 +32,7 @@ function TodosPage({token}) {
         
         const data = await response.json();     //this parses the data by converting the response into JSON, return a promise that resolves to the actual parsed data (in this case, an array of todo objects from the API. it calls .json() to get the real data, then passes it into setTodoList())
         setTodoList(data.tasks);
+        setError('');
         
       }
       catch(error) {
@@ -60,6 +61,7 @@ function TodosPage({token}) {
       } 
       else {
         const data = await resp.json()
+        setError('');
         setTodoList(previous => previous.map(todo => todo.id === newTodo.id ? data : todo));
       }
     }
