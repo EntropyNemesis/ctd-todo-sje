@@ -110,7 +110,7 @@ function TodosPage({token}) {
     
     catch(error){
       setError(`Error: ${error.name} | ${error.message}`);
-      setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? originalTodo : todo));
+      setTodoList(previous => previous.map(todo => todo.id === completeTodo.id ? originalTodo : todo));
     }
 
     finally{
