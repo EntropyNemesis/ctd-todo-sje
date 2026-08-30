@@ -21,8 +21,10 @@ function TodosPage({token}) {
     const [dataVersion, setDataVersion] = useState(0);
     const invalidateCache = useCallback(() => {
         setDataVersion(prev => prev + 1);
-        console.log("Invalidating memo cache after todo mutation");
+        //console.log("Invalidating memo cache after todo mutation");
     }, [])
+
+    const [filterError, setFilterError] = useState('');
 
   useEffect(() => {
     if (!token) return;
@@ -58,11 +60,17 @@ function TodosPage({token}) {
         
         const data = await response.json();     //this parses the data by converting the response into JSON, return a promise that resolves to the actual parsed data (in this case, an array of todo objects from the API. it calls .json() to get the real data, then passes it into setTodoList())
         setTodoList(data.tasks);
+        setFilterError('');
         setError('');
         
       }
       catch(error) {
-        setError(`Error: ${error.name} | ${error.message}`);
+        if (debouncedFilterTerm || sortBy !== 'createdAt' || sortDirection !== 'desc') {
+          setFilterError(`Error filtering/sorting todos: ${error.message}`);
+        }
+        else {
+          setError(`Error fetching todos: ${error.message}`);
+        }
       }
       finally{
         setIsTodoListLoading(false);
@@ -196,6 +204,20 @@ function TodosPage({token}) {
           <button onClick={() => setError('')}>Clear Error</button>
         </div>
       )}
+
+      {filterError && (
+          <div>
+            <p>{filterError}</p>  
+            <button onClick={() => setFilterError('')}>Clear Filter Error</button>  
+            <button onClick={() => {
+              setFilterTerm('')
+              setSortBy('createdAt')
+              setSortDirection('desc') 
+              setFilterError('')
+              }
+            }>Reset Filters</button>
+          </div>
+        )}    
     
       {isTodoListLoading && <p>Loading...</p>}
     
