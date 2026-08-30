@@ -3,7 +3,7 @@ import TodoForm from '../Todos/TodoForm.jsx';
 import SortBy from '../../shared/SortBy.jsx';
 import FilterInput from '../../shared/FilterInput.jsx';
 import useDebounce from '../../utils/useDebounce.js';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 
 function TodosPage({token}) {
     const [ todoList, setTodoList ] = useState([]);
@@ -17,6 +17,12 @@ function TodosPage({token}) {
     const handleFilterChange = (newTerm) => { 
       setFilterTerm(newTerm); 
     };
+
+    const [dataVersion, setDataVersion] = useState(0);
+    const invalidateCache = useCallback(() => {
+        setDataVersion(prev => prev + 1);
+        console.log("Invalidating memo cache after todo mutation");
+    }, [])
 
   useEffect(() => {
     if (!token) return;
@@ -83,6 +89,7 @@ function TodosPage({token}) {
         const data = await resp.json()
         setError('');
         setTodoList(previous => previous.map(todo => todo.id === newTodo.id ? data : todo));
+        invalidateCache();
       }
     }
     
@@ -126,7 +133,9 @@ function TodosPage({token}) {
       const data = await resp.json()
       setError('');
       setTodoList(previous => previous.map(todo => todo.id === id ? data : todo));
+      invalidateCache();
     }
+      
   }
     
     catch(error){
@@ -165,7 +174,8 @@ function TodosPage({token}) {
       const data = await resp.json()
       setError('');
       setTodoList(previous => previous.map(todo => todo.id === editedTodo.id ? data : todo));
-      }
+      invalidateCache();
+    }
     }
     
     catch(error){
@@ -193,7 +203,7 @@ function TodosPage({token}) {
           <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={setSortBy} onSortDirectionChange={setSortDirection}/>
           <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange}/>
           <TodoForm onAddTodo={addTodo} />
-          <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
+          <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo} dataVersion={dataVersion}/>
       </div>
     </>
   )
