@@ -1,6 +1,8 @@
 import TodoList from '../Todos/TodoList/TodoList.jsx';
 import TodoForm from '../Todos/TodoForm.jsx';
 import SortBy from '../../shared/SortBy.jsx';
+import FilterInput from '../../shared/FilterInput.jsx';
+import useDebounce from '../../utils/useDebounce.js';
 import {useState, useEffect} from 'react';
 
 function TodosPage({token}) {
@@ -9,6 +11,12 @@ function TodosPage({token}) {
     const [isTodoListLoading, setIsTodoListLoading] = useState(false);
     const [sortBy, setSortBy] = useState('createdAt');
     const [sortDirection, setSortDirection] = useState('desc');
+    const [filterTerm, setFilterTerm] = useState('');
+    const debouncedFilterTerm = useDebounce(filterTerm, 300);
+
+    const handleFilterChange = (newTerm) => { 
+      setFilterTerm(newTerm); 
+    };
 
   useEffect(() => {
     if (!token) return;
@@ -21,11 +29,17 @@ function TodosPage({token}) {
           },
           credentials: 'include',
         }
-        const params = new URLSearchParams({
+
+        const paramsObject = {
           sortBy,
           sortDirection,
           limit: 100,
-        });
+        };
+        if (debouncedFilterTerm) {
+          paramsObject.find = debouncedFilterTerm;
+        }
+        const params = new URLSearchParams(paramsObject);
+
         const response = await fetch(`/api/tasks?${params}`, options);
 
         if (response.status === 401) {
@@ -48,7 +62,7 @@ function TodosPage({token}) {
         setIsTodoListLoading(false);
       }
     })();
-  }, [token, sortBy, sortDirection]);
+  }, [token, sortBy, sortDirection, debouncedFilterTerm]);
 
   async function addTodo(todoTitle) {
     const newTodo = {id: Date.now(), title: todoTitle, isCompleted: false};
@@ -177,6 +191,7 @@ function TodosPage({token}) {
     
       <div>
           <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={setSortBy} onSortDirectionChange={setSortDirection}/>
+          <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange}/>
           <TodoForm onAddTodo={addTodo} />
           <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
       </div>
