@@ -1,7 +1,7 @@
 function SortBy({sortBy, sortDirection, onSortByChange, onSortDirectionChange}) {
     return(
         <>
-            <label htmlFor="sortBy">Sort By</label>
+            <label htmlFor="sortBy">Sort by</label>
             <select id="sortBy" value={sortBy} onChange={(event) => onSortByChange(event.target.value)}>
                 <option value='createdAt'>Created At</option>
                 <option value='title'>Title</option>
