@@ -18,6 +18,7 @@ export const TODO_ACTIONS = {
 
     SET_SORT: 'SET_SORT',
     SET_FILTER: 'SET_FILTER',
+    CLEAR_FILTER_ERROR: 'CLEAR_FILTER_ERROR',
     CLEAR_ERROR: 'CLEAR_ERROR',
     RESET_FILTERS: 'RESET_FILTERS'
 };
@@ -57,7 +58,7 @@ export function todoReducer(state, action) {
             return {
                 ...state,
                 isTodoListLoading: false,
-                ...(isFilteredOrSorted ? { filterError: `Error fetching todos: ${action.error}` }
+                ...(isFilteredOrSorted ? { filterError: `Error filtering/sorting todos: ${action.error}` }
                     : { error: `Error fetching todos: ${action.error}` })  
             };
         case TODO_ACTIONS.ADD_TODO_START:
@@ -69,7 +70,6 @@ export function todoReducer(state, action) {
             return {
                 ...state,
                 error: '',
-                filterError: '',
                 todoList: state.todoList.map(todo => todo.id === action.tempId ? action.todo : todo),
                 dataVersion: state.dataVersion + 1
                 };
@@ -126,6 +126,11 @@ export function todoReducer(state, action) {
                 ...state,
                 filterTerm: action.filterTerm
             };
+        case TODO_ACTIONS.CLEAR_FILTER_ERROR:
+            return {
+                ...state,
+                filterError: ''
+            }
         case TODO_ACTIONS.CLEAR_ERROR:
             return {
                 ...state,
