@@ -3,10 +3,11 @@ import TodoForm from '../Todos/TodoForm.jsx';
 import SortBy from '../../shared/SortBy.jsx';
 import FilterInput from '../../shared/FilterInput.jsx';
 import useDebounce from '../../utils/useDebounce.js';
-import {useState, useEffect, useCallback, useReducer} from 'react';
+import {useEffect, useReducer} from 'react';
 import {TODO_ACTIONS, initialTodoState, todoReducer }  from '../../reducers/todoReducer.js';
+import {useAuth} from '../../contexts/AuthContext.jsx';
 
-function TodosPage({token}) {
+function TodosPage() {
     // const [ todoList, setTodoList ] = useState([]);
     // const [error, setError] = useState('');
     // const [isTodoListLoading, setIsTodoListLoading] = useState(false);
@@ -41,6 +42,8 @@ function TodosPage({token}) {
     } = state;
 
     const debouncedFilterTerm = useDebounce(filterTerm, 300);
+
+    const {token} = useAuth();
 
   useEffect(() => {
     if (!token) return;
