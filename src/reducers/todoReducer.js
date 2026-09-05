@@ -54,11 +54,11 @@ export function todoReducer(state, action) {
                 filterError: '',
             };
         case TODO_ACTIONS.FETCH_ERROR:
-            const isFilteredOrSorted = state.filterTerm || state.sortBy !== 'createdAt' || state.sortDirection !== 'desc'
             return {
                 ...state,
                 isTodoListLoading: false,
-                ...(isFilteredOrSorted ? { filterError: `Error filtering/sorting todos: ${action.error}` }
+                ...(action.isFilterError 
+                    ? { filterError: `Error filtering/sorting todos: ${action.error}` }
                     : { error: `Error fetching todos: ${action.error}` })  
             };
         case TODO_ACTIONS.ADD_TODO_START:
@@ -141,7 +141,7 @@ export function todoReducer(state, action) {
                 ...state,
                 filterTerm: '',
                 sortBy: 'createdAt',
-                sortDirection: 'desc',
+                sortDirection: 'asc',
                 filterError: ''
             };
         default:

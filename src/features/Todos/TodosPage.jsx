@@ -88,12 +88,14 @@ function TodosPage() {
         // setError('');
       }
       catch(error) {
+        const isFilteredOrSorted = Boolean(debouncedFilterTerm) || sortBy !== 'createdAt' || sortDirection !== 'desc';
         //   if (debouncedFilterTerm || sortBy !== 'createdAt' || sortDirection !== 'desc') {
         //     setFilterError(`Error filtering/sorting todos: ${error.message}`);
         // }
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
-          error: error.message
+          error: error.message,
+          isFilterError: isFilteredOrSorted
         })
       }
         
