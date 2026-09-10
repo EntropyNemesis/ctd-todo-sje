@@ -39,8 +39,8 @@ function ProfilePage() {
                 // setFilterError('');
                 // setError('');
             }
-            catch(error);
-            ) {
+            catch(error)
+            {
                 setError('Sorry, there was an error fetching your todos. Please try again.');
             }
                 
