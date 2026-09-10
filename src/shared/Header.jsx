@@ -1,5 +1,6 @@
 import Logoff from '../features/Logoff.jsx';
 import {useAuth} from '../contexts/AuthContext.jsx';
+import Navigation from './Navigation.jsx';
 
 function Header() {
 
@@ -8,6 +9,7 @@ function Header() {
     return(
         <>
             <h1>Todo List</h1>
+            <Navigation />
             {isAuthenticated && <Logoff />}
         </>
     )
