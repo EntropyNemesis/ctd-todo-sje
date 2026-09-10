@@ -24,34 +24,34 @@ function Logon() {
         setIsLoggingOn(false);
     }
 
-    return (
-        <>
-            {authError && <p>{authError}</p>}
+    // return (
+    //     <>
+    //         {authError && <p>{authError}</p>}
 
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email: </label>
-                <input 
-                    type= 'text'
-                    id='email'
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    required />
+    //         <form onSubmit={handleSubmit}>
+    //             <label htmlFor="email">Email: </label>
+    //             <input 
+    //                 type= 'text'
+    //                 id='email'
+    //                 value={email}
+    //                 onChange={(event) => setEmail(event.target.value)}
+    //                 required />
 
-                <label htmlFor="password">Password: </label>
-                <input 
-                    type= 'password'
-                    id='password'
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    required />
-                <button 
-                    type="submit"
-                    disabled={isLoggingOn}>
-                    {isLoggingOn ? 'Logging in...' : 'Log On'}
-                </button>
-            </form>
-        </>
-    )
+    //             <label htmlFor="password">Password: </label>
+    //             <input 
+    //                 type= 'password'
+    //                 id='password'
+    //                 value={password}
+    //                 onChange={(event) => setPassword(event.target.value)}
+    //                 required />
+    //             <button 
+    //                 type="submit"
+    //                 disabled={isLoggingOn}>
+    //                 {isLoggingOn ? 'Logging in...' : 'Log On'}
+    //             </button>
+    //         </form>
+    //     </>
+    // )
 }
 
 export default Logon;

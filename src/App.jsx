@@ -1,9 +1,10 @@
 import './App.css';
 import Header from './shared/Header.jsx'
-import TodosPage from './features/Todos/TodosPage.jsx'
+import TodosPage from './pages/TodosPage.jsx'
 import Logon from './features/Logon.jsx'
 //import {useState} from 'react';
-import {useAuth} from './contexts/AuthContext.jsx';
+//import {useAuth} from './contexts/AuthContext.jsx';
+import {Routes, Route} from 'react-router';
 
 function App() {
   // const [email, setEmail] = useState('');
@@ -12,16 +13,15 @@ function App() {
 
   return (
 
-    <div>
-      <Header 
-        //token={token} onSetEmail={setEmail} onSetToken={setToken}
-      />
-      {isAuthenticated ? 
-        <TodosPage /*token={token}*/ /> : 
-        <Logon /*onSetEmail={setEmail} onSetToken={setToken}*/ />}
+    <>
+      <Header />
       
-    </div>
-  )   
+      <Routes>
+
+      </Routes>
+      
+    </>
+  );
 }
 
 export default App
