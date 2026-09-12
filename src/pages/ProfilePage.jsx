@@ -3,17 +3,19 @@ import { useAuth } from '../contexts/AuthContext';
 
 function ProfilePage() {
     const {isAuthenticated, name, token} = useAuth();
-    const [todoStats, setTodoStats] = useState({total: 0, completed: 0, active: 0});
+    const [todoStats, setTodoStats] = useState({total: 0, completed: 0, active: 0, percentage: 0});
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!token) return;
             (async function fetchTodos() {
             try{
+                setLoading(true);
+                setError('');
+
                 const options = {
-                headers: {
-                    'X-CSRF-TOKEN': token,
-                },
+                headers: {'X-CSRF-TOKEN': token},
                 credentials: 'include',
                 }
 
@@ -25,6 +27,9 @@ function ProfilePage() {
 
                 const response = await fetch(`/api/tasks?${params}`, options);
 
+                if (response.status === 401) {
+                    throw new Error('Unauthorized');
+                }
                 if (!response.ok) {
                 throw new Error(response.status)
                 }
@@ -34,18 +39,19 @@ function ProfilePage() {
                 const total = data.tasks.length;
                 const completed = data.tasks.filter((task) => task.isCompleted).length;
                 const active = total - completed;
+                const percentage = Math.round((completed / total) * 100);
 
-                setTodoStats({total: total, completed: completed, active: active});
+                setTodoStats({total: total, completed: completed, active: active, percentage: percentage});
                 // setFilterError('');
                 // setError('');
             }
-            catch(error)
-            {
-                setError('Sorry, there was an error fetching your todos. Please try again.');
-            }
+            catch(err)
+                {
+                    setError(`Error loading statistics: ${err.message}`);
+                }
                 
             finally{
-   
+                setLoading(false);
             }
             })();
         }, [token]);
@@ -53,16 +59,23 @@ function ProfilePage() {
 
     return (
         <>
-            {error && <p>{error}</p>}
-            
+                     
             <h3>Hi, {name}!</h3>
+            <h4>You are {isAuthenticated ? 'Logged in.' : 'Logged out.'}</h4>
 
-            <h3>Todo Stats:</h3>
-            <ul>
-                <li>Total: {todoStats.total}</li>
-                <li>Completed: {todoStats.completed}</li>
-                <li>Active: {todoStats.active}</li>
-            </ul>
+
+                <h3>Todo Stats:</h3>
+                {loading && <p>Loading...</p>}
+                {!loading && error && <p>{error}</p>}
+                {!loading && !error && 
+                <ul>
+                    <li>Total: {todoStats.total}</li>
+                    <li>Completed: {todoStats.completed}</li>
+                    <li>Active: {todoStats.active}</li>
+                    {todoStats.total > 0 &&
+                        <li>Percentage: {todoStats.percentage}%</li>}
+                </ul>
+                }
         </>
     )
 }
