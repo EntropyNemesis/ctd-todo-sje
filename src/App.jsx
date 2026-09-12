@@ -13,9 +13,6 @@ import RequireAuth from './components/RequireAuth.jsx';
 
 
 function App() {
-  // const [email, setEmail] = useState('');
-  // const [token, setToken] = useState('');
-  //const {isAuthenticated} = useAuth();
 
   return (
 

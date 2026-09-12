@@ -34,7 +34,6 @@ function TodosPage() {
     (async function fetchTodos() {
       try{
         dispatch({type: TODO_ACTIONS.FETCH_START})
-        //setIsTodoListLoading(true);
         const options = {
           headers: {
             'X-CSRF-TOKEN': token,
@@ -67,15 +66,9 @@ function TodosPage() {
           type: TODO_ACTIONS.FETCH_SUCCESS,
           tasks: data.tasks
         })
-        // setTodoList(data.tasks);
-        // setFilterError('');
-        // setError('');
       }
       catch(error) {
         const isFilteredOrSorted = Boolean(debouncedFilterTerm) || sortBy !== 'createdAt' || sortDirection !== 'desc';
-        //   if (debouncedFilterTerm || sortBy !== 'createdAt' || sortDirection !== 'desc') {
-        //     setFilterError(`Error filtering/sorting todos: ${error.message}`);
-        // }
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
           error: error.message,
@@ -88,7 +81,7 @@ function TodosPage() {
   async function addTodo(todoTitle) {
     const newTodo = {id: Date.now(), title: todoTitle, isCompleted: false};
     dispatch({type: TODO_ACTIONS.ADD_TODO_START, newTodo});
-    //setTodoList(previous => [newTodo, ...previous])
+
     const options = {
       method: 'POST',
       body: JSON.stringify({title: newTodo.title, isCompleted: newTodo.isCompleted}),
@@ -103,8 +96,7 @@ function TodosPage() {
           tempId: newTodo.id,
           error: 'There was an unexpected error adding that Todo item. Please try again.'
         })
-        //setTodoList(previous => previous.filter(todo => todo.id !== newTodo.id));
-        //setError('There was an unexpected error adding that Todo item. Please try again.');
+
       } 
       else {
         const data = await resp.json()
@@ -113,9 +105,6 @@ function TodosPage() {
           tempId: newTodo.id,
           todo: data
         })
-        //setError('');
-        //setTodoList(previous => previous.map(todo => todo.id === newTodo.id ? data : todo));
-        //invalidateCache();
       }
     }
     
@@ -125,8 +114,6 @@ function TodosPage() {
           tempId: newTodo.id,
           error: `Error: ${error.name} | ${error.message}`
       })
-      //setError(`Error: ${error.name} | ${error.message}`);
-      //setTodoList(previous => previous.filter(todo => todo.id !== newTodo.id));
     }
   }
 

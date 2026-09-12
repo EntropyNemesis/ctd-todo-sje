@@ -13,7 +13,9 @@ function LoginPage() {
     
 
     //gets intended destination from location state, defaults to /todos
-    const from = location.state?.from?.pathname || '/todos';
+    const from = location.state?.from
+        ? location.state.from.pathname + (location.state.from.search || '') 
+        : '/todos';
 
     useEffect(() => {
         if (isAuthenticated) {
