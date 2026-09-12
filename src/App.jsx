@@ -8,7 +8,7 @@ import {Routes, Route} from 'react-router';
 import HomePage from './pages/HomePage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
-import NotFoundPage from './pages/NotfFoundPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 
 

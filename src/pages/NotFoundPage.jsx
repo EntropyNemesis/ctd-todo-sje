@@ -1,7 +1,6 @@
 import { Link } from 'react-router';
-import Logoff from '../features/Logoff.jsx';
 
-function NotFound() {
+function NotFoundPage() {
   return (
     <>
     <div className="notFoundMsg">
@@ -15,9 +14,12 @@ function NotFound() {
         <Link className="linkButton" to={'/profile'}>
             Go to My Profile
         </Link>
+        <Link className="linkButton" to={'/about'}>
+            About
+        </Link>
 
     </div>
     </>
   );
 }
-export default NotFound;
+export default NotFoundPage;
