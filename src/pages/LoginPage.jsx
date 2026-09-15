@@ -30,7 +30,6 @@ function LoginPage() {
         const result = await login(email, password);
             if (result.success) {
                 setAuthError('');
-                navigate(from, {replace: true});
             }
             else {
                 setAuthError(result.error);

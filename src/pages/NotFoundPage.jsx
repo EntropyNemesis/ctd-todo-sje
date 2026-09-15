@@ -11,6 +11,9 @@ function NotFoundPage() {
         <Link className="linkButton" to={'/'}>
             Return to Homepage
         </Link>
+        <Link className="linkButton" to={'/todos'}>
+            Go to My Todos
+        </Link>
         <Link className="linkButton" to={'/profile'}>
             Go to My Profile
         </Link>
