@@ -8,6 +8,8 @@ import {useSearchParams} from 'react-router';
 import {TODO_ACTIONS, initialTodoState, todoReducer }  from '../reducers/todoReducer.js';
 import {useAuth} from '../contexts/AuthContext.jsx';
 import StatusFilter from '../shared/StatusFilter.jsx';
+import styles from './TodosPage.module.css';
+
 
 function TodosPage() {
     const [state, dispatch] = useReducer(todoReducer, initialTodoState);
@@ -245,33 +247,34 @@ function TodosPage() {
 
 
   return(
-    <>
+    <div className={styles.page}>
       {error && (
-        <div>
-          <p>{error}</p>
+        <div className={styles.errorBanner}>
+          <p className={styles.errorText}>{error}</p>
           <button onClick={() => 
             dispatch({type: TODO_ACTIONS.CLEAR_ERROR})
-            }>Clear Error</button>
+            } className={styles.secondaryButton}>Clear Error</button>
         </div>
       )}
 
       {filterError && (
-          <div>
-            <p>{filterError}</p>  
-            <button onClick={() => 
-              dispatch({type: TODO_ACTIONS.CLEAR_FILTER_ERROR})
-              //setFilterError('')
-              }>Clear Filter Error</button>  
-            <button onClick={() => {
-              dispatch({type: TODO_ACTIONS.RESET_FILTERS})
-              }
-            }>Reset Filters</button>
+          <div className={styles.filterErrorBanner}>
+            <p className={styles.filterErrorText}>{filterError}</p>  
+            <div className={styles.buttonGroup}>  
+              <button onClick={() => 
+                dispatch({type: TODO_ACTIONS.CLEAR_FILTER_ERROR})
+                } className={styles.secondaryButton}>Clear Filter Error</button>  
+              <button onClick={() => {
+                dispatch({type: TODO_ACTIONS.RESET_FILTERS})
+                }
+              } className={styles.secondaryButton}>Reset Filters</button>
+            </div>
           </div>
         )}    
     
-      {isTodoListLoading && <p>Loading...</p>}
+      {isTodoListLoading && <p className={styles.loading}>Loading...</p>}
     
-      <div>
+      <div className={styles.controls}>
           <SortBy 
             sortBy={sortBy} 
             sortDirection={sortDirection} 
@@ -298,6 +301,7 @@ function TodosPage() {
                 filterTerm: newTerm
               })
               }/>
+          </div>
           <TodoForm onAddTodo={addTodo} />
           <TodoList 
             todoList={todoList} 
@@ -308,7 +312,6 @@ function TodosPage() {
             statusFilter={statusFilter}
           />
       </div>
-    </>
   );
 }
 

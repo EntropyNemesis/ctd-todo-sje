@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import styles from './ProfilePage.module.css';
+
 
 function ProfilePage() {
     const {isAuthenticated, name, token} = useAuth();
@@ -58,25 +60,26 @@ function ProfilePage() {
 
 
     return (
-        <>
+        <div className={styles.page}>
                      
-            <h3>Hi, {name}!</h3>
-            <h4>You are {isAuthenticated ? 'Logged in.' : 'Logged out.'}</h4>
+            <h3 className={styles.greeting}>Hi, {name}!</h3>
+            <h4 className={styles.status}>You are {isAuthenticated ? 'Logged in.' : 'Logged out.'}</h4>
 
-
-                <h3>Todo Stats:</h3>
+            <div className={styles.card}>
+                <h3 className={styles.cardTitle}>Todo Stats:</h3>
                 {loading && <p>Loading...</p>}
                 {!loading && error && <p>{error}</p>}
                 {!loading && !error && 
-                <ul>
-                    <li>Total: {todoStats.total}</li>
-                    <li>Completed: {todoStats.completed}</li>
-                    <li>Active: {todoStats.active}</li>
+                <ul className={styles.statList}>
+                    <li className={styles.statRow}>Total: {todoStats.total}</li>
+                    <li className={styles.statRow}>Completed: {todoStats.completed}</li>
+                    <li className={styles.statRow}>Active: {todoStats.active}</li>
                     {todoStats.total > 0 &&
-                        <li>Percentage: {todoStats.percentage}%</li>}
+                        <li className={styles.statRow}>Percentage: {todoStats.percentage}%</li>}
                 </ul>
                 }
-        </>
+            </div>
+        </div>
     )
 }
 
