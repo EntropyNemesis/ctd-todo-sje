@@ -61,5 +61,3 @@ function TodoList({todoList, onCompleteTodo, onUpdateTodo, onDeleteTodo, dataVer
 }
 
 export default TodoList;
-
-//console.log(`Recalculating filtered todos (v${dataVersion})`); removed from line 6

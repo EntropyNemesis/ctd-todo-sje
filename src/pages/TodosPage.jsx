@@ -272,7 +272,12 @@ function TodosPage() {
           </div>
         )}    
     
-      {isTodoListLoading && <p className={styles.loading}>Loading...</p>}
+      {isTodoListLoading && (
+        <p className={styles.loading}>
+            <span className={styles.spinner}></span>
+            Loading...
+        </p>
+      )}
     
       <div className={styles.controls}>
           <SortBy 

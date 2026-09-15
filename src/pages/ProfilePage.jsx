@@ -44,8 +44,6 @@ function ProfilePage() {
                 const percentage = Math.round((completed / total) * 100);
 
                 setTodoStats({total: total, completed: completed, active: active, percentage: percentage});
-                // setFilterError('');
-                // setError('');
             }
             catch(err)
                 {
@@ -67,7 +65,12 @@ function ProfilePage() {
 
             <div className={styles.card}>
                 <h3 className={styles.cardTitle}>Todo Stats:</h3>
-                {loading && <p>Loading...</p>}
+                {loading && (
+                    <p className={styles.loading}>
+                        <span className={styles.spinner}></span>
+                        Loading...
+                    </p>
+                )}
                 {!loading && error && <p>{error}</p>}
                 {!loading && !error && 
                 <ul className={styles.statList}>
