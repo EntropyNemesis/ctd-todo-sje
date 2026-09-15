@@ -206,6 +206,44 @@ function TodosPage() {
     }
   }
 
+   async function deleteTodo(id) {
+      const deletedTodo = todoList.find((todo) => todo.id === id);
+
+      dispatch({
+          type: TODO_ACTIONS.DELETE_TODO_START,
+          id
+      });
+
+      const options = {
+          method: 'DELETE',
+          headers: {'X-CSRF-TOKEN': token},
+          credentials: 'include'
+      };
+      try{
+          const resp = await fetch(`/api/tasks/${id}`, options)
+          if (!resp.ok) {
+              dispatch({
+                  type: TODO_ACTIONS.DELETE_TODO_ERROR,
+                  deletedTodo,
+                  error: 'There was an unexpected error deleting that Todo item. Please try again.'
+              })
+          }
+          else {
+              dispatch({
+                  type: TODO_ACTIONS.DELETE_TODO_SUCCESS
+              })
+          }
+      }
+      catch(error){
+          dispatch({
+              type: TODO_ACTIONS.DELETE_TODO_ERROR,
+              deletedTodo,
+              error: `Error: ${error.name} | ${error.message}`
+          })
+      }
+   }
+
+
   return(
     <>
       {error && (
@@ -265,6 +303,7 @@ function TodosPage() {
             todoList={todoList} 
             onCompleteTodo={completeTodo} 
             onUpdateTodo={updateTodo} 
+            onDeleteTodo={deleteTodo}
             dataVersion={dataVersion}
             statusFilter={statusFilter}
           />

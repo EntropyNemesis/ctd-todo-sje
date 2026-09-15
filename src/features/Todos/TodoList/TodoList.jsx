@@ -1,7 +1,7 @@
 import TodoListItem from './TodoListItem.jsx';
 import {useMemo} from 'react';
 
-function TodoList({todoList, onCompleteTodo, onUpdateTodo, dataVersion, statusFilter='active'}) {
+function TodoList({todoList, onCompleteTodo, onUpdateTodo, onDeleteTodo, dataVersion, statusFilter='active'}) {
     const filteredTodoList = useMemo(() => {
 
         let filteredTodos;
@@ -48,6 +48,7 @@ function TodoList({todoList, onCompleteTodo, onUpdateTodo, dataVersion, statusFi
                             todo={todo} 
                             onCompleteTodo={onCompleteTodo} 
                             onUpdateTodo={onUpdateTodo}
+                            onDeleteTodo={onDeleteTodo}
                         />
                     )}
                     </ul> 

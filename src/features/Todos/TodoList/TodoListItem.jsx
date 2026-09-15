@@ -2,7 +2,7 @@ import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { useState } from 'react';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 
-function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
+function TodoListItem({todo, onCompleteTodo, onUpdateTodo, onDeleteTodo}) {
     const [isEditing, setIsEditing] = useState(false);
     const [workingTitle, setWorkingTitle] = useState(todo.title);
 
@@ -31,6 +31,7 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
                         <TextInputWithLabel value={workingTitle} onChange={handleEdit} elementId="todoTitle" labelText="Todo" />
                         <button type="button" onClick={handleCancel}>Cancel</button>
                         <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>Update</button>
+                        <button type="button" onClick={() => onDeleteTodo(todo.id)}>Delete</button>
                     </>) : (
                     <>
                         <label>
@@ -42,7 +43,6 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
                             />
                         </label>
                         <span onClick={() => setIsEditing(true)}>{todo.title}</span>
-                        
                     </>
                 )}
             </form>
