@@ -1,49 +1,28 @@
 import {useState} from 'react';
+import {useNavigate} from 'react-router';
 import {useAuth} from '../contexts/AuthContext';
+
 
 function Logoff() {
     const [authError, setAuthError] = useState('');
     const [isLoggingOff, setIsLoggingOff] = useState(false);
 
     const {logout} = useAuth();
+    const navigate = useNavigate();
 
     const handleLogoff = async () => {
         setIsLoggingOff(true);
+        setAuthError('');
 
         const result = await logout();
         if (result.success) {
-            setAuthError('');
+            navigate('/login');
         }
         else {
             setAuthError(result.error);
+            setIsLoggingOff(false);
         }
-
-        setIsLoggingOff(false);
     };
-
-    //     try {
-    //         const response = await fetch('/api/users/logoff', {
-    //             method: 'POST',
-    //             headers: {'X-CSRF-TOKEN': token},
-    //             credentials: 'include'
-    //         });
-
-    //         if (response.ok) {
-    //             setAuthError('');
-    //         } else {
-    //             const data = await response.json().catch(() => null);
-    //             setAuthError(`Logout failed: ${data?.message}`);
-    //         }
-    //     }
-    //     catch(error) {
-    //         setAuthError(`Error: ${error.name} | ${error.message}`);
-    //     }
-    //     finally {
-    //         onSetEmail('');
-    //         onSetToken('');
-    //         setIsLoggingOff(false);
-    //     }
-    //};
 
     return (
         <>
