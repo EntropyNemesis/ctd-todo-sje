@@ -28,7 +28,7 @@ This interactive app securely records and organizes todo list items, equipping t
 - `npm run lint` — runs ESLint to check code quality
 
 # Design Decisions: 
-Developer chose CSS Modules for the design, after testing and scrapping Tailwind after seeing how unreadable the code became with Tailwind's verbose classnames.
+Developer chose CSS Modules for the design, after testing and scrapping Tailwind after seeing how unreadable the code became with Tailwind's verbose classnames. A contemporary, streamlined style was chosen to reduce visual clutter, keeping focus on the tasks at hand since this app is for practical utility and organization. Color theme was chosen from among templates to include high contrast for accessibility, as well as input, text, and button sizes. Focus effects are present for potential keyboard navigation. An adaptation option to disable the loading state spinner was added so that individuals with vestibular issues can use assistive technology to turn off the spinner animation.
 
 # Future Improvements: 
 In future development, it would be helpful to:     
