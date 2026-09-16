@@ -1,8 +1,9 @@
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { useState } from 'react';
-import { isValidTodoTitle } from '../../../utils/todoValidation.js';
+import { isValidTodoTitle, TODO_TITLE_MAX_LENGTH } from '../../../utils/todoValidation.js';
+import styles from './TodoListItem.module.css';
 
-function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
+function TodoListItem({todo, onCompleteTodo, onUpdateTodo, onDeleteTodo}) {
     const [isEditing, setIsEditing] = useState(false);
     const [workingTitle, setWorkingTitle] = useState(todo.title);
 
@@ -18,6 +19,7 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
     function handleUpdate(event) {
         event.preventDefault();
         if (!isEditing) return;                       /* if isEditing is false, immediately exit the function and skip to return */
+        if (!isValidTodoTitle(workingTitle)) return;    //checks validity of updated input
         onUpdateTodo({...todo, title: workingTitle})  /* passes in a new object that destructures todo and sets its title equal to workingTitle*/
         setIsEditing(false);
     }
@@ -25,12 +27,19 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
     return(
         
         <li>
-            <form onSubmit={handleUpdate}>
+            <form onSubmit={handleUpdate} className={styles.item}>
                 {isEditing ? (
                     <>
-                        <TextInputWithLabel value={workingTitle} onChange={handleEdit} elementId="todoTitle" labelText="Todo" />
-                        <button type="button" onClick={handleCancel}>Cancel</button>
-                        <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>Update</button>
+                        <TextInputWithLabel 
+                            value={workingTitle}
+                            onChange={handleEdit} 
+                            elementId="todoTitle" 
+                            labelText="Todo" 
+                            maxLength={TODO_TITLE_MAX_LENGTH}
+                        />
+                        <button type="button" onClick={handleCancel} className={styles.secondaryButton}>Cancel</button>
+                        <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)} className={styles.secondaryButton}>Update</button>
+                        <button type="button" onClick={() => onDeleteTodo(todo.id)} className={styles.secondaryButton}>Delete</button>
                     </>) : (
                     <>
                         <label>
@@ -38,11 +47,13 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
                                 type="checkbox" 
                                 id={`checkbox${todo.id}`}
                                 checked={todo.isCompleted} 
-                                onChange={() => onCompleteTodo(todo.id)} 
+                                onChange={() => onCompleteTodo(todo.id)}
+                                className={styles.checkbox}
                             />
                         </label>
-                        <span onClick={() => setIsEditing(true)}>{todo.title}</span>
-                        
+                        <span onClick={() => setIsEditing(true)} className={styles.title}>
+                            {todo.title}
+                        </span>
                     </>
                 )}
             </form>

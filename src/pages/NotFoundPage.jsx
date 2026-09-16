@@ -1,25 +1,28 @@
 import { Link } from 'react-router';
+import styles from './NotFoundPage.module.css';
 
 function NotFoundPage() {
   return (
-    <>
-    <div className="notFoundMsg">
-        <h2>404: Not Found</h2>
-    </div>
-  
-    <div className="buttonGroup">
-        <Link className="linkButton" to={'/'}>
-            Return to Homepage
-        </Link>
-        <Link className="linkButton" to={'/profile'}>
-            Go to My Profile
-        </Link>
-        <Link className="linkButton" to={'/about'}>
-            About
-        </Link>
+    <div className={styles.page}>
+            <h2 className={styles.title}>404: Not Found</h2>
+            <p className={styles.subtitle}>We couldn't find the page you were looking for.</p>
+        
+            <Link className={styles.primaryButton} to={'/'}>
+                Return to Homepage
+            </Link>
+        <div className={styles.buttonGroup}>
 
+            <Link className={styles.secondaryButton} to={'/todos'}>
+                Go to My Todos
+            </Link>
+            <Link className={styles.secondaryButton} to={'/profile'}>
+                Go to My Profile
+            </Link>
+            <Link className={styles.secondaryButton} to={'/about'}>
+                About
+            </Link>
+        </div>
     </div>
-    </>
   );
 }
 export default NotFoundPage;

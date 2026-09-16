@@ -8,6 +8,8 @@ import {useSearchParams} from 'react-router';
 import {TODO_ACTIONS, initialTodoState, todoReducer }  from '../reducers/todoReducer.js';
 import {useAuth} from '../contexts/AuthContext.jsx';
 import StatusFilter from '../shared/StatusFilter.jsx';
+import styles from './TodosPage.module.css';
+
 
 function TodosPage() {
     const [state, dispatch] = useReducer(todoReducer, initialTodoState);
@@ -68,10 +70,11 @@ function TodosPage() {
         })
       }
       catch(error) {
+        console.error(error);
         const isFilteredOrSorted = Boolean(debouncedFilterTerm) || sortBy !== 'createdAt' || sortDirection !== 'desc';
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
-          error: error.message,
+          error: 'Unable to load your todos. Please try again.',
           isFilterError: isFilteredOrSorted
         })
       }
@@ -109,10 +112,11 @@ function TodosPage() {
     }
     
     catch(error){
+      console.error(error);
       dispatch({
           type: TODO_ACTIONS.ADD_TODO_ERROR,
           tempId: newTodo.id,
-          error: `Error: ${error.name} | ${error.message}`
+          error: 'There was an unexpected error adding that Todo item. Please try again.'
       })
     }
   }
@@ -154,11 +158,12 @@ function TodosPage() {
   }
     
     catch(error){
+      console.error(error);
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
         id,
         originalTodo,
-        error: `Error: ${error.name} | ${error.message}`
+        error: 'There was an unexpected error completing that Todo item. Please try again.'
       })
     }
   }
@@ -198,42 +203,88 @@ function TodosPage() {
     }
     
     catch(error){
+      console.error(error);
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
         originalTodo,
-        error: `Error: ${error.name} | ${error.message}`
+        error: 'There was an unexpected error updating that Todo item. Please try again.'
       })
     }
   }
 
+   async function deleteTodo(id) {
+      const deletedTodo = todoList.find((todo) => todo.id === id);
+
+      dispatch({
+          type: TODO_ACTIONS.DELETE_TODO_START,
+          id
+      });
+
+      const options = {
+          method: 'DELETE',
+          headers: {'X-CSRF-TOKEN': token},
+          credentials: 'include'
+      };
+      try{
+          const resp = await fetch(`/api/tasks/${id}`, options)
+          if (!resp.ok) {
+              dispatch({
+                  type: TODO_ACTIONS.DELETE_TODO_ERROR,
+                  deletedTodo,
+                  error: 'There was an unexpected error deleting that Todo item. Please try again.'
+              })
+          }
+          else {
+              dispatch({
+                  type: TODO_ACTIONS.DELETE_TODO_SUCCESS
+              })
+          }
+      }
+      catch(error){
+          console.error(error);
+          dispatch({
+              type: TODO_ACTIONS.DELETE_TODO_ERROR,
+              deletedTodo,
+              error: 'There was an unexpected error deleting that Todo item. Please try again.'
+          })
+      }
+   }
+
+
   return(
-    <>
+    <div className={styles.page}>
       {error && (
-        <div>
-          <p>{error}</p>
+        <div className={styles.errorBanner}>
+          <p className={styles.errorText}>{error}</p>
           <button onClick={() => 
             dispatch({type: TODO_ACTIONS.CLEAR_ERROR})
-            }>Clear Error</button>
+            } className={styles.secondaryButton}>Clear Error</button>
         </div>
       )}
 
       {filterError && (
-          <div>
-            <p>{filterError}</p>  
-            <button onClick={() => 
-              dispatch({type: TODO_ACTIONS.CLEAR_FILTER_ERROR})
-              //setFilterError('')
-              }>Clear Filter Error</button>  
-            <button onClick={() => {
-              dispatch({type: TODO_ACTIONS.RESET_FILTERS})
-              }
-            }>Reset Filters</button>
+          <div className={styles.filterErrorBanner}>
+            <p className={styles.filterErrorText}>{filterError}</p>  
+            <div className={styles.buttonGroup}>  
+              <button onClick={() => 
+                dispatch({type: TODO_ACTIONS.CLEAR_FILTER_ERROR})
+                } className={styles.secondaryButton}>Clear Filter Error</button>  
+              <button onClick={() => {
+                dispatch({type: TODO_ACTIONS.RESET_FILTERS})
+                }
+              } className={styles.secondaryButton}>Reset Filters</button>
+            </div>
           </div>
         )}    
     
-      {isTodoListLoading && <p>Loading...</p>}
+      {isTodoListLoading && (
+        <p className={styles.loading}>
+            <span className={styles.spinner}></span>
+            Loading...
+        </p>
+      )}
     
-      <div>
+      <div className={styles.controls}>
           <SortBy 
             sortBy={sortBy} 
             sortDirection={sortDirection} 
@@ -260,16 +311,17 @@ function TodosPage() {
                 filterTerm: newTerm
               })
               }/>
+          </div>
           <TodoForm onAddTodo={addTodo} />
           <TodoList 
             todoList={todoList} 
             onCompleteTodo={completeTodo} 
             onUpdateTodo={updateTodo} 
+            onDeleteTodo={deleteTodo}
             dataVersion={dataVersion}
             statusFilter={statusFilter}
           />
       </div>
-    </>
   );
 }
 

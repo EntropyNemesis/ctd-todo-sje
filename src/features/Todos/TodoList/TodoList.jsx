@@ -1,7 +1,8 @@
 import TodoListItem from './TodoListItem.jsx';
 import {useMemo} from 'react';
+import styles from './TodoList.module.css';
 
-function TodoList({todoList, onCompleteTodo, onUpdateTodo, dataVersion, statusFilter='active'}) {
+function TodoList({todoList, onCompleteTodo, onUpdateTodo, onDeleteTodo, dataVersion, statusFilter='active'}) {
     const filteredTodoList = useMemo(() => {
 
         let filteredTodos;
@@ -40,14 +41,15 @@ function TodoList({todoList, onCompleteTodo, onUpdateTodo, dataVersion, statusFi
         <>   
             {filteredTodoList.todos.length === 0 
                 ? (
-                    <p>{getEmptyMessage()}</p> )
+                    <p className={styles.emptyMessage}>{getEmptyMessage()}</p> )
                 : (
-                    <ul>{filteredTodoList.todos.map(todo => 
+                    <ul className={styles.list}>{filteredTodoList.todos.map(todo => 
                         <TodoListItem 
                             key={todo.id} 
                             todo={todo} 
                             onCompleteTodo={onCompleteTodo} 
                             onUpdateTodo={onUpdateTodo}
+                            onDeleteTodo={onDeleteTodo}
                         />
                     )}
                     </ul> 
@@ -59,5 +61,3 @@ function TodoList({todoList, onCompleteTodo, onUpdateTodo, dataVersion, statusFi
 }
 
 export default TodoList;
-
-//console.log(`Recalculating filtered todos (v${dataVersion})`); removed from line 6

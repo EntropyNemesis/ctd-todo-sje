@@ -38,9 +38,10 @@ export function AuthProvider({children}) {
             return { success: true };
         } else {
             //Failure: return error
+            console.error('Login failed:', data);
             return {
                 success: false,
-                error: `Authentication failed: ${data?.message}`,
+                error: 'Invalid email or password.'
             };
         }
         } catch (error) {
@@ -71,9 +72,10 @@ export function AuthProvider({children}) {
             return { success: true };
         } else {
             const data = await res.json();
+            console.error('Logout failed:', data);
             return {
                 success: false,
-                error: `Logout authentication failed: ${data?.message}`,
+                error: 'Unable to log off successfully. Please try again.'
             };
         }
         } catch (error) {
