@@ -30,23 +30,25 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo, onDeleteTodo}) {
             <form onSubmit={handleUpdate} className={styles.item}>
                 {isEditing ? (
                     <>
-                        <TextInputWithLabel 
-                            value={workingTitle}
-                            onChange={handleEdit} 
-                            elementId="todoTitle" 
-                            labelText="Todo" 
-                            maxLength={TODO_TITLE_MAX_LENGTH}
-                        />
+                        <div className={styles.inputWrapper}>
+                            <TextInputWithLabel
+                                value={workingTitle}
+                                onChange={handleEdit}
+                                elementId="todoTitle"
+                                labelText="Todo"
+                                maxLength={TODO_TITLE_MAX_LENGTH}
+                            />
+                        </div>
                         <button type="button" onClick={handleCancel} className={styles.secondaryButton}>Cancel</button>
                         <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)} className={styles.secondaryButton}>Update</button>
                         <button type="button" onClick={() => onDeleteTodo(todo.id)} className={styles.secondaryButton}>Delete</button>
                     </>) : (
                     <>
-                        <label>
-                            <input 
-                                type="checkbox" 
+                        <label className={styles.checkboxWrapper}>
+                            <input
+                                type="checkbox"
                                 id={`checkbox${todo.id}`}
-                                checked={todo.isCompleted} 
+                                checked={todo.isCompleted}
                                 onChange={() => onCompleteTodo(todo.id)}
                                 className={styles.checkbox}
                             />

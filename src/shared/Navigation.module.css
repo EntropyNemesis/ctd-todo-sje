@@ -1,7 +1,8 @@
 .navList {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 28px;
+    gap: 20px;
     list-style: none;
     padding: 0;
     margin: 0;

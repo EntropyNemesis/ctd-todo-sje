@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 :root {
     --color-bg: #f8fafc;
     --color-surface: #ffffff;
