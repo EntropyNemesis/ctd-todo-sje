@@ -38,7 +38,7 @@ In future development, it would be helpful to:
     - uncheck any that need to change status back from completed to active
 
 # License Information: 
-Created by Stephanie Jane Edwards with guidance from Code The Dream React 26.3 Cohort Class. The app is open source, with code publicly available.
+Created by Stephanie Jane Edwards with guidance from Code The Dream React 26.3 Cohort Class. The app is open source, with code publicly available at https://github.com/EntropyNemesis/ctd-todo-sje.
 
 # Contact Information: 
 Contact the app creator at https://github.com/EntropyNemesis/ with any questions.
