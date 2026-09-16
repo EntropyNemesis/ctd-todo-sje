@@ -2,8 +2,6 @@ import './App.css';
 import Header from './shared/Header.jsx'
 import TodosPage from './pages/TodosPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
-//import {useState} from 'react';
-//import {useAuth} from './contexts/AuthContext.jsx';
 import {Routes, Route} from 'react-router';
 import HomePage from './pages/HomePage.jsx';
 import AboutPage from './pages/AboutPage.jsx';

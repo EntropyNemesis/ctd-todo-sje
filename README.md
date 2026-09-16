@@ -1,12 +1,53 @@
-App name: My To-Do List
-Created by Stephanie Jane Edwards with guidance from Code The Dream
-React 26.3 Cohort Class
+# Project Title: 
+My Todo List Tracker App
 
-Install by cloning a local copy of the main branch from GitHub to your local machine, in a folder created for this purpose.
+# Project Description: 
+This interactive app securely records and organizes todo list items, equipping the user to add, save, update, and delete todo list tasks, checking them off to track their status for maximum productivity. Tasks can be searched by key word, sorted by title, or sorted by when they were created.  The app can keep things organized and maximize productivity for the user.
 
-Start the development server using the command "npm run dev" using a terminal in VS Code or a similar text editor on your local machine. Open http://localhost:5173/ in your browser of choice.
+# Live Demo Link:
+https://drive.google.com/file/d/1lbPm6JQv6NNyWIaD12uB3TzhCOR3HkP0/view?usp=sharing
 
-Replace text for To-Do List items by changing the object title text in the array of objects found in App.jsx.  Customize the title using the H1 header text also found in App.jsx.  
+# Features List: 
+- Add new todo list items which are automatically saved
+- Update the wording of each todo
+- Cancel if you start to update but change your mind
+- Delete todos
+- Mark todos as complete with one click of a checkbox
+- Sort todos by title or creation date
+- Search todos by keywords
+- Filter the todos list by status
 
-Contact the app creator at GIStephanieJane@gmail.com with any questions.
+# Technologies Used: 
+- **Frontend:** React 19.2.7, React Router, CSS Modules
+- **State Management:** useReducer, Context API
+- **Build Tool:** Vite
+
+# Available Scripts: 
+- `npm run dev` — starts the local development server with hot reloading
+- `npm run build` — builds an optimized production bundle into `dist/`
+- `npm run preview` — serves the production build locally to test before deploying
+- `npm run lint` — runs ESLint to check code quality
+
+# Design Decisions: 
+Developer chose CSS Modules for the design, after testing and scrapping Tailwind after seeing how unreadable the code became with Tailwind's verbose classnames. A contemporary, streamlined style was chosen to reduce visual clutter, keeping focus on the tasks at hand since this app is for practical utility and organization. Color theme was chosen from among templates to include high contrast for accessibility, as well as input, text, and button sizes. Focus effects are present for potential keyboard navigation. An adaptation option to disable the loading state spinner was added so that individuals with vestibular issues can use assistive technology to turn off the spinner animation.
+
+# Future Improvements: 
+In future development, it would be helpful to:     
+    - add the capabilities to group tasks by custom category, 
+    - optionally add a completion date
+    - uncheck any that need to change status back from completed to active
+
+# License Information: 
+Created by Stephanie Jane Edwards with guidance from Code The Dream React 26.3 Cohort Class. The app is open source, with code publicly available.
+
+# Contact Information: 
+Contact the app creator at https://github.com/EntropyNemesis/ with any questions.
+
+# Getting Started: 
+- Install by cloning a local copy of the main branch from GitHub to your local machine, in a folder created for this purpose.
+
+- Start the development server using the command "npm run dev" using a terminal in VS Code or a similar text editor on your local machine. Open http://localhost:3001/ in your browser of choice. 
+
+- Requires Node 20+.
+
 
