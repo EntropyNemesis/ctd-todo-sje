@@ -5,7 +5,8 @@ function TextInputWithLabel({
     ref,
     onChange,
     labelText,
-    value
+    value,
+    maxLength
 }) {
 
 
@@ -18,6 +19,7 @@ function TextInputWithLabel({
                 ref={ref}
                 value={value}
                 onChange={onChange}
+                maxLength={maxLength}
                 className={styles.input}
             />
         </>

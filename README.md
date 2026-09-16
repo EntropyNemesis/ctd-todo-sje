@@ -1,36 +1,52 @@
-Project Title: My Todo List Tracker App
+# Project Title: 
+My Todo List Tracker App
 
-Project Description: This interactive app securely records and organizes todo list items, equipping the user to add, save, update, and delete todo list tasks, checking them off to track their status for maximum productivity. Tasks can be searched by key word, sorted by title, or sorted by when they were created.
+# Project Description: 
+This interactive app securely records and organizes todo list items, equipping the user to add, save, update, and delete todo list tasks, checking them off to track their status for maximum productivity. Tasks can be searched by key word, sorted by title, or sorted by when they were created.
 
-Live Demo Link: TBD
+# Live Demo Link: TBD
 
-Features List: 
-    - 
+# Features List: 
+- Add new todo list items which are automatically saved
+- Update the wording of each todo
+- Cancel if you start to update but change your mind
+- Delete todos
+- Mark todos as complete with one click of a checkbox
+- Sort todos by title or creation date
+- Search todos by keywords
+- Filter the todos list by status
 
+# Technologies Used: 
+- **Frontend:** React 19.2.7, React Router, CSS Modules
+- **State Management:** useReducer, Context API
+- **Build Tool:** Vite
 
-Features List: Bullet points of main functionality (add todos, mark complete, filter, etc.)
+# Available Scripts: 
+- `npm run dev` — starts the local development server with hot reloading
+- `npm run build` — builds an optimized production bundle into `dist/`
+- `npm run preview` — serves the production build locally to test before deploying
+- `npm run lint` — runs ESLint to check code quality
 
-Technologies Used: List of frameworks, libraries, and tools used
-Screenshots: TBD
+# Design Decisions: 
+Developer chose CSS Modules for the design, after testing and scrapping Tailwind after seeing how unreadable the code became with Tailwind's verbose classnames.
 
-Available Scripts: Explanation of npm scripts (dev, build, preview, etc.)
-
-Design Decisions: Developer chose CSS Modules for the design, after testing and scrapping Tailwind after seeing how unreadable the code became with Tailwind's verbose classnames.
-
-Future Improvements: In future development, it would be helpful to:     
+# Future Improvements: 
+In future development, it would be helpful to:     
     - add the capabilities to group tasks by custom category, 
     - optionally add a completion date
     - uncheck any that need to change status back from completed to active
 
-License Information: Created by Stephanie Jane Edwards with guidance from Code The Dream React 26.3 Cohort Class. The app is open source, with code publicly available.
+# License Information: 
+Created by Stephanie Jane Edwards with guidance from Code The Dream React 26.3 Cohort Class. The app is open source, with code publicly available.
 
-Contact Information: Contact the app creator at https://github.com/EntropyNemesis/ with any questions.
+# Contact Information: 
+Contact the app creator at https://github.com/EntropyNemesis/ with any questions.
 
+# Getting Started: 
+- Install by cloning a local copy of the main branch from GitHub to your local machine, in a folder created for this purpose.
 
-Getting Started: Install by cloning a local copy of the main branch from GitHub to your local machine, in a folder created for this purpose.
+- Start the development server using the command "npm run dev" using a terminal in VS Code or a similar text editor on your local machine. Open http://localhost:3001/ in your browser of choice. 
 
-Start the development server using the command "npm run dev" using a terminal in VS Code or a similar text editor on your local machine. Open http://localhost:5173/ in your browser of choice.
-
-Replace text for To-Do List items by changing the object title text in the array of objects found in App.jsx.  Customize the title using the H1 header text also found in App.jsx.  
+- Requires Node 20+.
 
 

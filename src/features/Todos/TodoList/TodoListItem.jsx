@@ -1,6 +1,6 @@
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { useState } from 'react';
-import { isValidTodoTitle } from '../../../utils/todoValidation.js';
+import { isValidTodoTitle, TODO_TITLE_MAX_LENGTH } from '../../../utils/todoValidation.js';
 import styles from './TodoListItem.module.css';
 
 function TodoListItem({todo, onCompleteTodo, onUpdateTodo, onDeleteTodo}) {
@@ -19,6 +19,7 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo, onDeleteTodo}) {
     function handleUpdate(event) {
         event.preventDefault();
         if (!isEditing) return;                       /* if isEditing is false, immediately exit the function and skip to return */
+        if (!isValidTodoTitle(workingTitle)) return;    //checks validity of updated input
         onUpdateTodo({...todo, title: workingTitle})  /* passes in a new object that destructures todo and sets its title equal to workingTitle*/
         setIsEditing(false);
     }
@@ -29,7 +30,13 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo, onDeleteTodo}) {
             <form onSubmit={handleUpdate} className={styles.item}>
                 {isEditing ? (
                     <>
-                        <TextInputWithLabel value={workingTitle} onChange={handleEdit} elementId="todoTitle" labelText="Todo" />
+                        <TextInputWithLabel 
+                            value={workingTitle}
+                            onChange={handleEdit} 
+                            elementId="todoTitle" 
+                            labelText="Todo" 
+                            maxLength={TODO_TITLE_MAX_LENGTH}
+                        />
                         <button type="button" onClick={handleCancel} className={styles.secondaryButton}>Cancel</button>
                         <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)} className={styles.secondaryButton}>Update</button>
                         <button type="button" onClick={() => onDeleteTodo(todo.id)} className={styles.secondaryButton}>Delete</button>

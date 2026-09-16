@@ -70,10 +70,11 @@ function TodosPage() {
         })
       }
       catch(error) {
+        console.error(error);
         const isFilteredOrSorted = Boolean(debouncedFilterTerm) || sortBy !== 'createdAt' || sortDirection !== 'desc';
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
-          error: error.message,
+          error: 'Unable to load your todos. Please try again.',
           isFilterError: isFilteredOrSorted
         })
       }
@@ -111,10 +112,11 @@ function TodosPage() {
     }
     
     catch(error){
+      console.error(error);
       dispatch({
           type: TODO_ACTIONS.ADD_TODO_ERROR,
           tempId: newTodo.id,
-          error: `Error: ${error.name} | ${error.message}`
+          error: 'There was an unexpected error adding that Todo item. Please try again.'
       })
     }
   }
@@ -156,11 +158,12 @@ function TodosPage() {
   }
     
     catch(error){
+      console.error(error);
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
         id,
         originalTodo,
-        error: `Error: ${error.name} | ${error.message}`
+        error: 'There was an unexpected error completing that Todo item. Please try again.'
       })
     }
   }
@@ -200,10 +203,11 @@ function TodosPage() {
     }
     
     catch(error){
+      console.error(error);
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
         originalTodo,
-        error: `Error: ${error.name} | ${error.message}`
+        error: 'There was an unexpected error updating that Todo item. Please try again.'
       })
     }
   }
@@ -237,10 +241,11 @@ function TodosPage() {
           }
       }
       catch(error){
+          console.error(error);
           dispatch({
               type: TODO_ACTIONS.DELETE_TODO_ERROR,
               deletedTodo,
-              error: `Error: ${error.name} | ${error.message}`
+              error: 'There was an unexpected error deleting that Todo item. Please try again.'
           })
       }
    }
